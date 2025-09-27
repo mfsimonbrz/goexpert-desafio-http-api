@@ -49,7 +49,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	currencyFile, err := os.OpenFile("currency.txt", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
+	currencyFile, err := os.OpenFile("cotacao.txt", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
 	if err != nil {
 		log.Fatal(err)
 	}
