@@ -3,10 +3,12 @@ package main
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"log"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -27,7 +29,11 @@ func main() {
 
 	res, err := http.DefaultClient.Do(req)
 	if err != nil {
-		log.Fatal(err)
+		if errors.Is(err, context.DeadlineExceeded) {
+			log.Println("Error: Timeout while getting quote...")
+		} else {
+			log.Fatal(err)
+		}
 	}
 
 	defer res.Body.Close()
@@ -43,6 +49,15 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fmt.Println(currencyQuote.BidPrice)
+	currencyFile, err := os.OpenFile("currency.txt", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0644)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer currencyFile.Close()
+	bidString := fmt.Sprintf("%s\t%s\n", time.Now().Format(time.ANSIC), currencyQuote.BidPrice)
+	currencyFile.WriteString(bidString)
+
+	log.Println(currencyQuote.BidPrice)
 
 }
