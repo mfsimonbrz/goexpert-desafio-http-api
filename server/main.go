@@ -1,3 +1,8 @@
+/*
+NOTA:
+Ao tentar utilizar a API chamando via código, obtive como retorno o status 429 - Too Many Requests. Foi necessário criar uma conta no site e utilizar o token de api fornecido.
+Por esse motivo é necessário informar um token de api em um arquivo .env (utilize o arquivo .env.example como modelo).
+*/
 package main
 
 import (
