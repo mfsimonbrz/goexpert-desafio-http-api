@@ -1,2 +1,3 @@
 server/.env
-client/currency.txt
+client/cotacao.txt
+server/app.db
